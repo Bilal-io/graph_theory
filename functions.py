@@ -24,7 +24,7 @@ def C(e,G):
 T = ({2,3},[(2,3)])
 #    {end points}, [edges] 
 
-# not finsiehd, get rid of any end points that exists in T
+
 def incident_edges(T,G):
     edges = []
     for v in T[0]:
