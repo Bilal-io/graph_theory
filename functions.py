@@ -1,29 +1,7 @@
-#import Weighted_Graph
-
-
-
-#
-from Weighted_Graph import *
-G = Weighted_Graph('test_graph.txt')
-G.draw_graph()
-#print(G.edge_set())
-#print(G.vertex_set())
-#print(G.edge_dict())
-#H = ({0,1,3},[(0,1),(1,3)])
-#print(G.draw_subgraph(H))
-#
-
-
+from Weighted_Graph import Weighted_Graph
 
 def C(e,G):
     return G.edge_dict()[e]
-
-#check function
-#print(C((1,4),G))
-
-T = ({2,3},[(2,3)])
-#    {end points}, [edges] 
-
 
 def incident_edges(T,G):
     edges = []
@@ -31,20 +9,20 @@ def incident_edges(T,G):
         for e in G.edge_set():
             if v in e:
                 edges.append(e)
-    for e in edges:
-        if e in T[1]:
-            edges.remove(e)
+    edges = [e for e in edges[:-1] if (e[0] not in T[0] or e[1] not in T[0])] # filter the edges
     return edges
 
-# finish
 def min_incident_edge(T,G):
     edges = incident_edges(T,G)
     min_edge = edges[0]
     for e in edges:
-        #if... get min weight
-        return 0 # remove this
+        if G.edge_dict()[min_edge] > G.edge_dict()[e]:
+            min_edge = e
     return min_edge
 
-# update T
 def update(T,G):
-    return 0
+    NewValues = min_incident_edge(T,G)
+    for i in NewValues: # add both vertices in to T[0] only one will be added as the other already exists, but the order changes so that's a work-around. 
+        T[0].add(i)
+    # if NewValues not in T[1]: # only add if not the new set does not exist already 
+    T[1].append(NewValues)
